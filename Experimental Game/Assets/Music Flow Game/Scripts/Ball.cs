@@ -6,6 +6,8 @@ public class Ball : MonoBehaviour
 
     public float ballSpeed;
 
+    public GameMaster gMaster;
+
     private GameObject PlayerPaddle;
     private GameObject EnemyPaddle;
 
@@ -60,9 +62,23 @@ public class Ball : MonoBehaviour
         viewPos.y = Mathf.Clamp01(viewPos.y);
         transform.position = Camera.main.ViewportToWorldPoint(viewPos);
 
-        if (viewPos.x >= 1f) print("Right");
-        if (viewPos.x <= 0) print("Left");
-      
+        if (viewPos.x >= 1f)
+        {
+           // print("Right");
+
+            gMaster.aiScore++;
+
+            transform.position = ballStartPos;
+        }
+        else if (viewPos.x <= 0)
+        {
+           // print("Left");
+
+            gMaster.playerScore++;
+
+            transform.position = ballStartPos;
+        }
+
 
 
     }
@@ -83,7 +99,7 @@ public class Ball : MonoBehaviour
             moveToEnemyMid = false;
             moveToPlayer = false; ;
 
-           // print("enemy");
+            // print("enemy");
 
             //this.gameobject.transform.translate(-ballspeed, 0, 0 * time.deltatime);
         }
