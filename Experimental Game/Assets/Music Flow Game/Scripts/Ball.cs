@@ -46,17 +46,16 @@ public class Ball : MonoBehaviour
         if (moveToPlayer == true)
         {
             rig.AddForce(new Vector2(ballSpeed, 0));
-            // this.gameObject.transform.Translate(moveRight);
+            //this.gameObject.transform.Translate(moveRight);
         }
 
         if (moveToEnemyMid == true)
         {
-            this.gameObject.transform.Translate(moveLeft);
+            rig.AddForce(new Vector2(-ballSpeed, 0));
+            //this.gameObject.transform.Translate(moveLeft);
         }
 
         //Screen
-        //Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
-
         Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
         viewPos.x = Mathf.Clamp01(viewPos.x);
         viewPos.y = Mathf.Clamp01(viewPos.y);
@@ -64,7 +63,7 @@ public class Ball : MonoBehaviour
 
         if (viewPos.x >= 1f)
         {
-           // print("Right");
+            // print("Right");
 
             gMaster.aiScore++;
 
@@ -72,7 +71,7 @@ public class Ball : MonoBehaviour
         }
         else if (viewPos.x <= 0)
         {
-           // print("Left");
+            // print("Left");
 
             gMaster.playerScore++;
 
@@ -94,14 +93,17 @@ public class Ball : MonoBehaviour
             //print("PLAYER");
         }
 
-        if (col.gameObject.name == EnemyPaddle.name)
+        if (col.gameObject.name == "Paddle Player 2")
         {
             moveToEnemyMid = false;
-            moveToPlayer = false; ;
+            moveToPlayer = false;
 
-            // print("enemy");
+        }
 
-            //this.gameobject.transform.translate(-ballspeed, 0, 0 * time.deltatime);
+        if (col.gameObject.name == "Paddle CPU")
+        {
+            moveToEnemyMid = false;
+            moveToPlayer = false;
         }
 
 

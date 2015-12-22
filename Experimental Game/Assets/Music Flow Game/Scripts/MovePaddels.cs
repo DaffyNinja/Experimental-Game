@@ -5,12 +5,12 @@ public class MovePaddels : MonoBehaviour {
 
     public float speed;
 
-    Rigidbody2D rig2D;
+  //  Rigidbody2D rig2D;
 
 	// Use this for initialization
 	void Start () 
     {
-        rig2D = GetComponent<Rigidbody2D>();
+       // rig2D = GetComponent<Rigidbody2D>();
 	
 	}
 	
