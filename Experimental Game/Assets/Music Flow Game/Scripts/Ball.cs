@@ -25,7 +25,6 @@ public class Ball : MonoBehaviour
     void Start()
     {
         PlayerPaddle = GameObject.Find("Paddle Player");
-
         EnemyPaddle = GameObject.Find("Paddle CPU");
 
         moveToPlayer = true;
@@ -40,27 +39,30 @@ public class Ball : MonoBehaviour
     void Update()
     {
         Vector2 moveLeft = new Vector2(-ballSpeed, 0);
-
         Vector2 moveRight = new Vector2(ballSpeed, 0);
-
-
-        
 
         if (moveToPlayer == true)
         {
             rig.AddForce(new Vector2(ballSpeed, 0));
-
-           // this.gameObject.transform.Translate(moveRight);
+            // this.gameObject.transform.Translate(moveRight);
         }
 
         if (moveToEnemyMid == true)
         {
-
-
             this.gameObject.transform.Translate(moveLeft);
-
         }
 
+        //Screen
+        //Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
+
+        Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
+        viewPos.x = Mathf.Clamp01(viewPos.x);
+        viewPos.y = Mathf.Clamp01(viewPos.y);
+        transform.position = Camera.main.ViewportToWorldPoint(viewPos);
+
+        if (viewPos.x >= 1f) print("Right");
+        if (viewPos.x <= 0) print("Left");
+      
 
 
     }
@@ -71,56 +73,22 @@ public class Ball : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             moveToEnemyMid = false;
-
             moveToPlayer = false;
 
-            print("PLAYER");
+            //print("PLAYER");
         }
 
         if (col.gameObject.name == EnemyPaddle.name)
         {
             moveToEnemyMid = false;
-
             moveToPlayer = false; ;
 
-            print("enemy");
+           // print("enemy");
 
             //this.gameobject.transform.translate(-ballspeed, 0, 0 * time.deltatime);
         }
 
-        //    if (col.gameObject.name == "Play Top")
-        //    {
-        //        print("Player Top");
 
-        //        moveToEnemyTop = true;
-
-        //        moveToPlayer = false;
-        //    }
-
-        //    if (col.gameObject.name == "Play Mid")
-        //    {
-        //        moveToPlayer = false;
-
-        //        moveToEnemyTop = false;
-
-        //        moveToEnemyMid = true;
-
-        //        print("PLAYER");
-
-        //        //this.gameObject.transform.Translate(-ballSpeed, 0, 0 * Time.deltaTime);
-        //    }
-
-
-
-        //    if (col.gameObject.name == "Border Right")
-        //    {
-        //        this.gameObject.transform.position = ballStartPos;
-        //    }
-
-        //    if (col.gameObject.name == "Border Left")
-        //    {
-        //        this.gameObject.transform.position = ballStartPos;
-        //    }
     }
 
 }
