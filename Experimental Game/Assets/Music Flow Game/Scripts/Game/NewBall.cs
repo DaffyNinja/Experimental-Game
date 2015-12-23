@@ -1,15 +1,49 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NewBall : MonoBehaviour {
+public class NewBall : MonoBehaviour
+{
 
     public float speed = 30;
+
+    public GameMaster gMaster;
+
+    Vector2 ballStartPos;
 
     void Start()
     {
         // Initial Velocity
         GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+
+        ballStartPos = this.gameObject.transform.position;
     }
+
+    void Update()
+    {
+        //Screen
+        Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
+        viewPos.x = Mathf.Clamp01(viewPos.x);
+        viewPos.y = Mathf.Clamp01(viewPos.y);
+        transform.position = Camera.main.ViewportToWorldPoint(viewPos);
+
+        if (viewPos.x >= 1f)
+        {
+            // print("Right");
+
+            gMaster.aiScore++;
+
+            transform.position = ballStartPos;
+        }
+        else if (viewPos.x <= 0)
+        {
+            // print("Left");
+
+            gMaster.playerScore++;
+
+            transform.position = ballStartPos;
+        }
+    }
+
 
     float hitFactor(Vector2 ballPos, Vector2 racketPos,
                     float racketHeight)
