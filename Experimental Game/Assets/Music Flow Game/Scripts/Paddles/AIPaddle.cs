@@ -1,31 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIPaddle : MonoBehaviour {
+public class AIPaddle : MonoBehaviour
+{
+
+    Vector3 move = Vector3.zero;
 
     public float speed;
 
+    public Transform ball;
 
-    GameObject ballOBJ;
-
-
-    Rigidbody2D rig;
-
-	// Use this for initialization
-	void Start () 
+    void Update()
     {
-        ballOBJ = GameObject.FindGameObjectWithTag("Ball");
+        float d = ball.position.y - transform.position.y;
 
-        rig = GetComponent<Rigidbody2D>();
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-        //transform.Translate(0, ballOBJ.transform.position.y * Time.deltaTime * speed, 0);
+        if (d > 0)
+        {
+            move.y = speed * Mathf.Min(d, 1.0f);
+        }
+        if (d < 0)
+        {
+            move.y = -(speed * Mathf.Min(-d, 1.0f));
+        }
 
-        rig.velocity = new Vector2(rig.velocity.x, ballOBJ.transform.position.y * speed);
-	
-	}
+        transform.position += move * Time.deltaTime;
+    }
+ 
 }
