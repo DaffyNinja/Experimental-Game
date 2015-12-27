@@ -4,28 +4,25 @@ using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
-
+    [Header("Scoring")]
     public int playerScore;
     public int aiScore;
-
     [Space(5)]
-
     public int winScore;
-
     public int loseScore;
-
     [Space(5)]
-
     public Text playerPoints;
     public Text aiPoints;
 
-    //[Space(5)]
+    [Header("Paddles Flip")]
+    public GameObject paddle1;
+    public GameObject paddle2;
 
-    //public GameObject topBorder;
-    //public GameObject bottomBorder;
+    [Space(5)]
+    public float moveSpeed;
 
-
-
+    Vector3 paddle1StartPos;
+    Vector3 paddle2StartPos;
 
 
 
@@ -34,13 +31,42 @@ public class GameMaster : MonoBehaviour
     {
         Cursor.visible = false;
 
+        paddle1StartPos = paddle1.transform.position;
+        paddle2StartPos = paddle2.transform.position;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerPoints.text = playerScore.ToString();
+        if (Input.GetKey(KeyCode.Space))
+        {
+            MovePaddles();
 
+        }
+
+
+
+
+        Score();
+    }
+
+    void MovePaddles()
+    {
+        // print("Pressed");
+
+        paddle1.transform.position = Vector3.Lerp(paddle1StartPos, paddle2StartPos, moveSpeed);
+        //  paddle2.transform.position = Vector3.Lerp(paddle2StartPos, paddle1StartPos, moveSpeed);
+
+        paddle1.GetComponent<BoxCollider2D>().enabled = false;
+        // paddle2.GetComponent<BoxCollider2D>().enabled = false;
+
+    }
+
+
+    void Score()
+    {
+        playerPoints.text = playerScore.ToString();
         aiPoints.text = aiScore.ToString();
 
         if (playerScore >= winScore)
@@ -51,18 +77,7 @@ public class GameMaster : MonoBehaviour
         {
             //Lose
         }
-
-
-        //Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
-        //// viewPos.x = Mathf.Clamp01(viewPos.x);
-        //viewPos.y = Mathf.Clamp01(viewPos.y);
-        ////  transform.position = Camera.main.ViewportToWorldPoint(viewPos);
-
-        
-
-
-
-
-
     }
+
+
 }
