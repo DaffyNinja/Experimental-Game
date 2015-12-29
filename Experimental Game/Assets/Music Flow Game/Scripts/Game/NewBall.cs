@@ -3,7 +3,6 @@ using System.Collections;
 
 public class NewBall : MonoBehaviour
 {
-
     public float speed = 30;
 
     public GameMaster gMaster;
@@ -26,19 +25,34 @@ public class NewBall : MonoBehaviour
         viewPos.y = Mathf.Clamp01(viewPos.y);
         transform.position = Camera.main.ViewportToWorldPoint(viewPos);
 
+        // The ball has gone pas the screen on the right adding point to ai score
         if (viewPos.x >= 1f)
         {
             // print("Right");
 
-            gMaster.aiScore++;
+            if (gMaster.hasFlipped == false)
+            {
+                gMaster.aiScore++;
+            }
+            else if (gMaster.hasFlipped == true)
+            {
+                gMaster.playerScore++;
+            }
 
             transform.position = ballStartPos;
         }
-        else if (viewPos.x <= 0)
+        else if (viewPos.x <= 0)   // Add point to player score 
         {
             // print("Left");
 
-            gMaster.playerScore++;
+            if (gMaster.hasFlipped == false)
+            {
+                gMaster.playerScore++;
+            }
+            else if (gMaster.hasFlipped == true)
+            {
+                gMaster.aiScore++;
+            }
 
             transform.position = ballStartPos;
         }
@@ -48,22 +62,11 @@ public class NewBall : MonoBehaviour
     float hitFactor(Vector2 ballPos, Vector2 racketPos,
                     float racketHeight)
     {
-        // ascii art:
-        // ||  1 <- at the top of the racket
-        // ||
-        // ||  0 <- at the middle of the racket
-        // ||
-        // || -1 <- at the bottom of the racket
         return (ballPos.y - racketPos.y) / racketHeight;
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        // Note: 'col' holds the collision information. If the
-        // Ball collided with a racket, then:
-        //   col.gameObject is the racket
-        //   col.transform.position is the racket's position
-        //   col.collider is the racket's collider
 
         // Hit the left Racket?
         if (col.gameObject.name == "Paddle CPU" || col.gameObject.name == "Paddle Player 2")
