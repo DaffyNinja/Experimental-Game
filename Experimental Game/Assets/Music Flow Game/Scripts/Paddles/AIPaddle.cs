@@ -9,6 +9,15 @@ public class AIPaddle : MonoBehaviour
     public float speed;
 
     public Transform ball;
+    [Space(5)]
+    public AudioClip hitSound;
+    AudioSource aSource;
+
+    void Start()
+    {
+        aSource = GetComponent<AudioSource>();
+        aSource.clip = hitSound;
+    }
 
     void Update()
     {
@@ -24,6 +33,15 @@ public class AIPaddle : MonoBehaviour
         }
 
         transform.position += move * Time.deltaTime;
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Ball")
+        {
+            //print("Hit");
+            aSource.Play();
+        }
     }
  
 }

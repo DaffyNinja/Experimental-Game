@@ -1,18 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-// V0.1
-
+// V0.2
 public class FlashBackground : MonoBehaviour
 {
-    public int intesnity;
-
-    public float timeTillChange;
-
-    float timer;
-
+    public bool canChange;
     [Space(5)]
-
+    public int intesnity;
+    public float timeTillChange;
+    float timer;
+    [Space(5)]
     public Material[] backMaterials;
 
     int ran;
@@ -27,16 +24,19 @@ public class FlashBackground : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime * intesnity;
-
-        if (timer >= timeTillChange)
+        if (canChange == true)
         {
-            ran = Random.Range(0, backMaterials.Length);
+            timer += Time.deltaTime * intesnity;
+            if (timer >= timeTillChange)
+            {
+                ran = Random.Range(0, backMaterials.Length);
+                timer = 0;
+            }
 
-            timer = 0;
+            RenderSettings.skybox = backMaterials[ran];
         }
 
-        RenderSettings.skybox = backMaterials[ran];
+
 
 
     }
