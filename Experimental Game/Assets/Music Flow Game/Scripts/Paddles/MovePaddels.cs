@@ -5,9 +5,7 @@ public class MovePaddels : MonoBehaviour
 {
 
     public float speed;
-    [Space(5)]
-    public AudioClip hitSound;
-    AudioSource aSource;
+  
 
 
     Rigidbody2D rig2D;
@@ -16,9 +14,7 @@ public class MovePaddels : MonoBehaviour
     void Start()
     {
         rig2D = GetComponent<Rigidbody2D>();
-        aSource = GetComponent<AudioSource>();
-
-        aSource.clip = hitSound;
+      
     }
 
     // Update is called once per frame
@@ -42,7 +38,7 @@ public class MovePaddels : MonoBehaviour
         if (col.gameObject.tag == "Ball")
         {
             //print("Hit");
-            aSource.Play();
+           // aSource.Play();
         }
     }
 }

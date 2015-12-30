@@ -92,6 +92,7 @@ public class GameMaster : MonoBehaviour
         if (playerScore >= winScore)
         {
             //win
+			Application.LoadLevel(0);
         }
         else if (aiScore >= loseScore)
         {

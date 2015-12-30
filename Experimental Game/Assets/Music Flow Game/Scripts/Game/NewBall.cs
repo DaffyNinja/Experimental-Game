@@ -6,6 +6,10 @@ public class NewBall : MonoBehaviour
     public float speed = 30;
 
     public GameMaster gMaster;
+	[Space(5)]
+	public AudioClip hitPaddlesSound;
+	public AudioClip hitWallsSound;
+	AudioSource aSource;
 
     Vector2 ballStartPos;
 
@@ -15,6 +19,9 @@ public class NewBall : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
 
         ballStartPos = this.gameObject.transform.position;
+
+		aSource = GetComponent<AudioSource>();
+
     }
 
     void Update()
@@ -81,6 +88,10 @@ public class NewBall : MonoBehaviour
 
             // Set Velocity with dir * speed
             GetComponent<Rigidbody2D>().velocity = dir * speed;
+
+			//Play Music
+			aSource.clip = hitPaddlesSound;
+			aSource.Play();
         }
 
         // Hit the right Racket?
@@ -96,6 +107,17 @@ public class NewBall : MonoBehaviour
 
             // Set Velocity with dir * speed
             GetComponent<Rigidbody2D>().velocity = dir * speed;
+
+			//Play Music
+			aSource.clip = hitPaddlesSound;
+			aSource.Play();
         }
+
+		if(col.gameObject.tag == "Wall")
+		{
+			aSource.clip = hitWallsSound;
+			aSource.Play();
+		}
+
     }
 }

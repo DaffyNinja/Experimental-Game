@@ -9,14 +9,10 @@ public class AIPaddle : MonoBehaviour
     public float speed;
 
     public Transform ball;
-    [Space(5)]
-    public AudioClip hitSound;
-    AudioSource aSource;
-
+  
     void Start()
     {
-        aSource = GetComponent<AudioSource>();
-        aSource.clip = hitSound;
+       
     }
 
     void Update()
@@ -40,7 +36,7 @@ public class AIPaddle : MonoBehaviour
         if (col.gameObject.tag == "Ball")
         {
             //print("Hit");
-            aSource.Play();
+            //aSource.Play();
         }
     }
  
