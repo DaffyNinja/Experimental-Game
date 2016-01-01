@@ -8,9 +8,10 @@ public class GameMaster : MonoBehaviour
     public int playerScore;
     public int aiScore;
     [Space(5)]
-	public int changeBackgroundScore;
-	public int changeSizeScore;
+    public int changeBackgroundScore;
+    public int changeSizeScore;
     public int flipPositionsScore;
+    public int cameraZoomOutScore;
     [Space(5)]
     public int winScore;
     public int loseScore;
@@ -25,7 +26,7 @@ public class GameMaster : MonoBehaviour
     [Space(5)]
     public float moveSpeed;
 
-	FlashBackground flashBack;
+    FlashBackground flashBack;
 
     Vector3 paddle1StartPos;
     Vector3 paddle2StartPos;
@@ -34,19 +35,31 @@ public class GameMaster : MonoBehaviour
     bool canMove;
     public bool hasFlipped;
 
+    [Space(5)]
+    [Header("Camera")]
+    public float zoomOutSize;
+    public float zoomSpeed;
+
+
+    Camera mainCam;
+
 
 
     // Use this for initialization
     void Start()
     {
-       // Cursor.visible = false;
+        // Cursor.visible = false;
 
-		flashBack = GetComponent<FlashBackground>();
+        mainCam = Camera.main;
+
+        flashBack = GetComponent<FlashBackground>();
 
         paddle1StartPos = paddle1.transform.position;
         paddle2StartPos = paddle2.transform.position;
 
         canFlip = true;
+
+
 
     }
 
@@ -92,25 +105,38 @@ public class GameMaster : MonoBehaviour
 
     void Score()
     {
-		playerPointsText.text = playerScore.ToString();
-		aiPointsText.text = aiScore.ToString();
+        playerPointsText.text = playerScore.ToString();
+        aiPointsText.text = aiScore.ToString();
 
-		if(playerScore >= changeBackgroundScore || aiScore >= changeBackgroundScore)
-		{
-			flashBack.canChange = true;
-		}
+        // Background Change
+        if (playerScore >= changeBackgroundScore || aiScore >= changeBackgroundScore)
+        {
+            flashBack.canChange = true;
+        }
 
-		if(playerScore >= changeSizeScore || aiScore >= changeSizeScore)
-		{
-			paddle1.GetComponent<NewChangeSize>().changeSize = true;
-			paddle2.GetComponent<NewChangeSize>().changeSize = true;
-		}
-			
+        // Change paddle sizes
+        if (playerScore >= changeSizeScore || aiScore >= changeSizeScore)
+        {
+            paddle1.GetComponent<NewChangeSize>().changeSize = true;
+            paddle2.GetComponent<NewChangeSize>().changeSize = true;
+        }
 
+        // Camera zoom out
+        if (playerScore >= cameraZoomOutScore || aiScore >= cameraZoomOutScore)
+        {
+            mainCam.orthographicSize = Mathf.Lerp(mainCam.orthographicSize, zoomOutSize, zoomSpeed * Time.deltaTime);
+        }
+
+        if (mainCam.orthographicSize >= zoomOutSize - 0.1f)
+        {
+            //print("I have zoomed out");
+        }
+
+        // Win Lose
         if (playerScore >= winScore)
         {
             //win
-			//Application.LoadLevel(0);
+            //Application.LoadLevel(0);
         }
         else if (aiScore >= loseScore)
         {

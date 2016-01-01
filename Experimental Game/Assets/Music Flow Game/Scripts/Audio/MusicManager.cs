@@ -41,7 +41,7 @@ public class MusicManager : MonoBehaviour
 			{
 				aSource.clip = song1;
 				aSource.Play ();
-				playMusic = false;
+                startMusic = false;
 			}
 		}
 
@@ -50,12 +50,17 @@ public class MusicManager : MonoBehaviour
 		{
 			playSong2 = true;
 
-			if (playSong2 == true) 
-			{
-				aSource.clip = song2;
-				aSource.Play ();
-				playSong2 = false;
-			}
+            if (playMusic == true)
+            {
+                if (playSong2 == true)
+                {
+                    print("pLay");
+                    aSource.clip = song2;
+                    aSource.Play();
+                    playSong2 = false;
+                    playMusic = false;
+                }
+            }
 		}
 
 	
