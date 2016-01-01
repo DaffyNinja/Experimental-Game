@@ -10,6 +10,7 @@ public class GameMaster : MonoBehaviour
     [Space(5)]
     public int changeBackgroundScore;
     public int changeSizeScore;
+    public int rotatePaddlesScore;
     public int flipPositionsScore;
     public int cameraZoomOutScore;
     [Space(5)]
@@ -18,6 +19,16 @@ public class GameMaster : MonoBehaviour
     [Space(5)]
     public Text playerPointsText;
     public Text aiPointsText;
+
+    [Space(5)]
+    [Header("Rotate Paddles")]
+    public float rotateSpeed;
+    public float changeRotateTime;
+
+    bool rotateLeft;
+    bool rotateRight;
+
+    float rotateTimer;
 
     [Header("Paddles Flip")]
     public GameObject paddle1;
@@ -56,6 +67,8 @@ public class GameMaster : MonoBehaviour
 
         paddle1StartPos = paddle1.transform.position;
         paddle2StartPos = paddle2.transform.position;
+
+        rotateRight = true;
 
         canFlip = true;
 
@@ -119,6 +132,39 @@ public class GameMaster : MonoBehaviour
         {
             paddle1.GetComponent<NewChangeSize>().changeSize = true;
             paddle2.GetComponent<NewChangeSize>().changeSize = true;
+        }
+
+        if (playerScore >= rotatePaddlesScore || aiScore >= rotatePaddlesScore)
+        {
+
+            if (rotateRight == true)
+            {
+                paddle1.transform.Rotate(0, 0, rotateSpeed, 0);
+                paddle2.transform.Rotate(0, 0, rotateSpeed, 0);
+
+                rotateTimer += Time.deltaTime;
+
+                if (rotateTimer >= changeRotateTime)
+                {
+                    rotateRight = false;
+                    rotateTimer = 0;
+                }
+            }
+            else if (rotateRight == false)
+            {
+                paddle1.transform.Rotate(0, 0, -rotateSpeed, 0);
+                paddle2.transform.Rotate(0, 0, -rotateSpeed, 0);
+
+                rotateTimer += Time.deltaTime;
+
+                if (rotateTimer >= changeRotateTime)
+                {
+                    rotateRight = true;
+                    rotateTimer = 0;
+                }
+            }
+
+            // Change direction
         }
 
         // Camera zoom out
