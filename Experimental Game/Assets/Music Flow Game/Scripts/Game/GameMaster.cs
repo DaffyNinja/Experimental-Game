@@ -52,6 +52,7 @@ public class GameMaster : MonoBehaviour
     public float zoomSpeed;
 
 
+
     Camera mainCam;
 
 
@@ -96,8 +97,10 @@ public class GameMaster : MonoBehaviour
         }
 
 
-
         Score();
+
+        Controls();
+
     }
 
     void MovePaddles()
@@ -127,11 +130,15 @@ public class GameMaster : MonoBehaviour
             flashBack.canChange = true;
         }
 
-        // Change paddle sizes
+        // Change paddle sizes  & change music
         if (playerScore >= changeSizeScore || aiScore >= changeSizeScore)
         {
             paddle1.GetComponent<NewChangeSize>().changeSize = true;
             paddle2.GetComponent<NewChangeSize>().changeSize = true;
+
+            // Music
+
+
         }
 
         if (playerScore >= rotatePaddlesScore || aiScore >= rotatePaddlesScore)
@@ -182,11 +189,27 @@ public class GameMaster : MonoBehaviour
         if (playerScore >= winScore)
         {
             //win
-            //Application.LoadLevel(0);
+            Application.LoadLevel(0);
         }
         else if (aiScore >= loseScore)
         {
             //Lose
+            Application.LoadLevel(0);
+        }
+    }
+
+
+    void Controls()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            // Quit
+
+           // print("Quit");
+
+            Application.LoadLevel(0);
+
+
         }
     }
 

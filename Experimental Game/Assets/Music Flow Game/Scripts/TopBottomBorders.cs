@@ -27,12 +27,23 @@ public class TopBottomBorders : MonoBehaviour
             worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(350, 625, 0));
 
             gameObject.transform.position = worldPoint;
+
+            // Scale
+
+            Vector3 trans = transform.localScale;
+
+            trans.x = Camera.main.ScreenToWorldPoint(transform.position).x;
         }
         else
         {
             worldPoint = Camera.main.ScreenToWorldPoint(new Vector3(350, 0, 0));
 
             gameObject.transform.position = worldPoint;
+
+            //Scale
+            Vector3 trans = transform.localScale;
+
+            trans.x = Camera.main.ScreenToWorldPoint(transform.position).x;
         }
 
 
