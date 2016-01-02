@@ -6,12 +6,13 @@ public class NewBall : MonoBehaviour
     public float speed = 30;
 
     public GameMaster gMaster;
-	[Space(5)]
-	public AudioClip hitPaddlesSound;
-	public AudioClip hitWallsSound;
-	AudioSource aSource;
+    [Space(5)]
+    public AudioClip hitPaddlesSound;
+    public AudioClip hitWallsSound;
+    AudioSource aSource;
 
     Vector2 ballStartPos;
+    Vector2 dir;
 
     void Start()
     {
@@ -20,7 +21,7 @@ public class NewBall : MonoBehaviour
 
         ballStartPos = this.gameObject.transform.position;
 
-		aSource = GetComponent<AudioSource>();
+        aSource = GetComponent<AudioSource>();
 
     }
 
@@ -46,6 +47,9 @@ public class NewBall : MonoBehaviour
                 gMaster.playerScore++;
             }
 
+            dir = new Vector2(-1, 0).normalized;
+            GetComponent<Rigidbody2D>().velocity = dir * speed;
+
             transform.position = ballStartPos;
         }
         else if (viewPos.x <= 0)   // Add point to player score 
@@ -60,6 +64,9 @@ public class NewBall : MonoBehaviour
             {
                 gMaster.aiScore++;
             }
+
+            dir = new Vector2(1, 0).normalized;
+            GetComponent<Rigidbody2D>().velocity = dir * speed;
 
             transform.position = ballStartPos;
         }
@@ -84,14 +91,14 @@ public class NewBall : MonoBehaviour
                                 col.collider.bounds.size.y);
 
             // Calculate direction, make length=1 via .normalized
-            Vector2 dir = new Vector2(1, y).normalized;
+            dir = new Vector2(1, y).normalized;
 
             // Set Velocity with dir * speed
             GetComponent<Rigidbody2D>().velocity = dir * speed;
 
-			//Play Music
-			aSource.clip = hitPaddlesSound;
-			aSource.Play();
+            //Play Music
+            aSource.clip = hitPaddlesSound;
+            aSource.Play();
         }
 
         // Hit the right Racket?
@@ -103,21 +110,21 @@ public class NewBall : MonoBehaviour
                                 col.collider.bounds.size.y);
 
             // Calculate direction, make length=1 via .normalized
-            Vector2 dir = new Vector2(-1, y).normalized;
+            dir = new Vector2(-1, y).normalized;
 
             // Set Velocity with dir * speed
             GetComponent<Rigidbody2D>().velocity = dir * speed;
 
-			//Play Music
-			aSource.clip = hitPaddlesSound;
-			aSource.Play();
+            //Play Music
+            aSource.clip = hitPaddlesSound;
+            aSource.Play();
         }
 
-		if(col.gameObject.tag == "Wall")
-		{
-			aSource.clip = hitWallsSound;
-			aSource.Play();
-		}
+        if (col.gameObject.tag == "Wall")
+        {
+            aSource.clip = hitWallsSound;
+            aSource.Play();
+        }
 
     }
 }
