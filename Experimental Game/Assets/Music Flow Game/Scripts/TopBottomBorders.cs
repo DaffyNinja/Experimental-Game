@@ -4,12 +4,17 @@ using System.Collections;
 public class TopBottomBorders : MonoBehaviour
 {
 
-    public Camera mainCam;
+
 
     public bool isTop;
+    [Space(5)]
+    public float ySize;
+   // public float zSize;
+
+
     //public bool isBottom;
 
-
+    Camera mainCam;
     Vector3 worldPoint;
 
 
@@ -33,7 +38,7 @@ public class TopBottomBorders : MonoBehaviour
 
             // Scale
             int newScale = mainCam.pixelWidth;
-            transform.localScale = new Vector3(newScale, 1, 1);
+            transform.localScale = new Vector3(newScale, ySize, 1);
 
         }
         else
@@ -44,7 +49,7 @@ public class TopBottomBorders : MonoBehaviour
 
             // Scale
             int newScale = mainCam.pixelWidth;
-            transform.localScale = new Vector3(newScale, 1, 1);
+            transform.localScale = new Vector3(newScale, ySize, 1);
 
         }
 

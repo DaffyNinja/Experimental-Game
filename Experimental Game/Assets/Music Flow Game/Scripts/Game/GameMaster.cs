@@ -8,6 +8,7 @@ public class GameMaster : MonoBehaviour
     public int playerScore;
     public int aiScore;
     [Space(5)]
+    public bool canChange;
     public int changeBackgroundScore;
     public int changeSizeScore;
     public int rotatePaddlesScore;
@@ -80,24 +81,28 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canFlip == true)
-        {
-            if (playerScore >= flipPositionsScore || aiScore >= flipPositionsScore)
-            {
-                print("Flip");
-                canMove = true;
-                canFlip = false;
-                hasFlipped = true;
-            }
-        }
+
+
+        //if (canFlip == true)
+        //{
+        //    if (playerScore >= flipPositionsScore || aiScore >= flipPositionsScore)
+        //    {
+        //        print("Flip");
+        //        canMove = true;
+        //        canFlip = false;
+        //        hasFlipped = true;
+        //    }
+        //}
 
         if (canMove)
         {
             MovePaddles();
         }
 
-
-        Score();
+        if (canChange)
+        {
+            Score();
+        }
 
         Controls();
 
@@ -137,8 +142,6 @@ public class GameMaster : MonoBehaviour
             paddle2.GetComponent<NewChangeSize>().changeSize = true;
 
             // Music
-
-
         }
 
         if (playerScore >= rotatePaddlesScore || aiScore >= rotatePaddlesScore)
@@ -172,6 +175,15 @@ public class GameMaster : MonoBehaviour
             }
 
             // Change direction
+        }
+
+        // Flip
+        if (playerScore >= flipPositionsScore || aiScore >= flipPositionsScore)
+        {
+            print("Flip");
+            canMove = true;
+            canFlip = false;
+            hasFlipped = true;
         }
 
         // Camera zoom out
