@@ -7,6 +7,13 @@ public class NewBall : MonoBehaviour
 
     public GameMaster gMaster;
     [Space(5)]
+    public bool canChangeSize;
+    public float minSize;
+    public float maxSize;
+    public float sizeSpeed;
+    float newScale;
+    float ratio;
+    [Space(5)]
     public AudioClip hitPaddlesSound;
     public AudioClip hitWallsSound;
     AudioSource aSource;
@@ -22,6 +29,10 @@ public class NewBall : MonoBehaviour
         ballStartPos = this.gameObject.transform.position;
 
         aSource = GetComponent<AudioSource>();
+
+        //ChangeSize
+        ratio = Time.deltaTime * sizeSpeed;
+        InvokeRepeating("ChangeScale", 1f, 1f);
 
     }
 
@@ -79,6 +90,7 @@ public class NewBall : MonoBehaviour
         return (ballPos.y - racketPos.y) / racketHeight;
     }
 
+
     void OnCollisionEnter2D(Collision2D col)
     {
 
@@ -127,4 +139,21 @@ public class NewBall : MonoBehaviour
         }
 
     }
+
+    void ChangeSize()
+    {
+
+        if (canChangeSize == true)
+        {
+
+            float newVal = Mathf.Lerp(transform.localScale.y, newScale, ratio);
+            transform.localScale = new Vector3(transform.localScale.x, newVal, transform.localScale.z);
+        }
+    }
+    void ChangeScale()
+    {
+        newScale = Random.Range(minSize, maxSize);
+    }
+
+
 }

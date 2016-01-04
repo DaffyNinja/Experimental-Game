@@ -27,7 +27,7 @@ public class NewChangeSize : MonoBehaviour
 
     void Update()
     {
-        if (changeSize == transform)
+        if (changeSize == true)
         {
 
             float newVal = Mathf.Lerp(transform.localScale.y, newScale, ratio);
