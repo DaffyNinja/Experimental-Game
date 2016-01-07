@@ -10,9 +10,10 @@ public class GameMaster : MonoBehaviour
     [Space(5)]
     public bool canChange;
     public int changeBackgroundScore;
+    public int changeMusicScore;
     public int changeSizeScore;
     public int rotatePaddlesScore;
-    public int flipPositionsScore;
+    //public int flipPositionsScore;
     public int cameraZoomOutScore;
     [Space(5)]
     public int winScore;
@@ -37,6 +38,8 @@ public class GameMaster : MonoBehaviour
 
     [Space(5)]
     public float moveSpeed;
+    [Space(5)]
+    public MusicManager musMan;
 
     FlashBackground flashBack;
 
@@ -51,6 +54,7 @@ public class GameMaster : MonoBehaviour
     [Header("Camera")]
     public float zoomOutSize;
     public float zoomSpeed;
+    public bool hasZoomed;
 
 
 
@@ -61,7 +65,7 @@ public class GameMaster : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // Cursor.visible = false;
+        Cursor.visible = false;
 
         mainCam = Camera.main;
 
@@ -83,21 +87,8 @@ public class GameMaster : MonoBehaviour
     {
 
 
-        //if (canFlip == true)
-        //{
-        //    if (playerScore >= flipPositionsScore || aiScore >= flipPositionsScore)
-        //    {
-        //        print("Flip");
-        //        canMove = true;
-        //        canFlip = false;
-        //        hasFlipped = true;
-        //    }
-        //}
 
-        if (canMove)
-        {
-            MovePaddles();
-        }
+
 
         if (canChange)
         {
@@ -105,21 +96,6 @@ public class GameMaster : MonoBehaviour
         }
 
         Controls();
-
-    }
-
-    void MovePaddles()
-    {
-        // print("Pressed");
-        paddle1.transform.position = Vector3.Lerp(paddle1StartPos, paddle2StartPos, moveSpeed);
-        paddle2.transform.position = Vector3.Lerp(paddle2StartPos, paddle1StartPos, moveSpeed);
-
-        if (paddle1.transform.position == paddle2StartPos)
-        {
-            //print("Done");
-
-            canMove = false;
-        }
 
     }
 
@@ -141,7 +117,14 @@ public class GameMaster : MonoBehaviour
             paddle1.GetComponent<NewChangeSize>().changeSize = true;
             paddle2.GetComponent<NewChangeSize>().changeSize = true;
 
-            // Music
+
+        }
+
+        // Music
+
+        if (playerScore >= changeMusicScore || aiScore >= changeMusicScore)
+        {
+            musMan.playSong2 = true;
         }
 
         if (playerScore >= rotatePaddlesScore || aiScore >= rotatePaddlesScore)
@@ -178,13 +161,13 @@ public class GameMaster : MonoBehaviour
         }
 
         // Flip
-        if (playerScore >= flipPositionsScore || aiScore >= flipPositionsScore)
-        {
-            print("Flip");
-            canMove = true;
-            canFlip = false;
-            hasFlipped = true;
-        }
+        //if (playerScore >= flipPositionsScore || aiScore >= flipPositionsScore)
+        //{
+        //    print("Flip");
+        //    canMove = true;
+        //    canFlip = false;
+        //    hasFlipped = true;
+        //}
 
         // Camera zoom out
         if (playerScore >= cameraZoomOutScore || aiScore >= cameraZoomOutScore)
@@ -195,6 +178,7 @@ public class GameMaster : MonoBehaviour
         if (mainCam.orthographicSize >= zoomOutSize - 0.1f)
         {
             //print("I have zoomed out");
+            hasZoomed = true;
         }
 
         // Win Lose
@@ -213,11 +197,11 @@ public class GameMaster : MonoBehaviour
 
     void Controls()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             // Quit
 
-           // print("Quit");
+            // print("Quit");
 
             Application.LoadLevel(0);
 

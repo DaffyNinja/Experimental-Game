@@ -30,11 +30,11 @@ public class MusicManager : MonoBehaviour
     [Space(5)]
     public GameMaster gMaster;
     [Space(5)]
-    public int changeMusicScore;
+    // public int changeMusicScore;
 
 
     bool playMusic;
-    bool playSong2;
+    public bool playSong2;
 
     AudioSource aSource;
 
@@ -63,60 +63,60 @@ public class MusicManager : MonoBehaviour
         }
 
 
-        if (gMaster.playerScore >= changeMusicScore || gMaster.aiScore >= changeMusicScore)
+        // if (gMaster.playerScore >= changeMusicScore || gMaster.aiScore >= changeMusicScore)
+        // {
+
+
+
+        if (playMusic == true)
         {
-
-            playSong2 = true;
-
-            if (playMusic == true)
+            if (playSong2 == true)
             {
-                if (playSong2 == true)
+                //print("pLay");
+
+                startFade = true;
+
+                if (startFade == true)
                 {
-                    //print("pLay");
 
-                    startFade = true;
+                    //fadeOut = true;
 
-                    if (startFade == true)
+                    if (fadeOut == true)
                     {
+                        aSource.volume -= Time.deltaTime * fadeTime;
 
-                        //fadeOut = true;
-
-                        if (fadeOut == true)
+                        if (aSource.volume <= minVolume)
                         {
-                            aSource.volume -= Time.deltaTime * fadeTime;
+                            aSource.clip = song2;
+                            aSource.Play();
 
-                            if (aSource.volume <= minVolume)
-                            {
-                                aSource.clip = song2;
-                                aSource.Play();
+                            fadeOut = false;
+                            fadeIn = true;
 
-                                fadeOut = false;
-                                fadeIn = true;
+                            // print("Start Fade in");
 
-                                print("Start Fade in");
-
-                            }
                         }
-
-                        if (fadeIn == true)
-                        {
-                            aSource.volume += Time.deltaTime * fadeTime;
-
-                            if (aSource.volume >= maxVolume)
-                            {
-                                fadeIn = false;
-                                startFade = false;
-                                playSong2 = false;
-                                // playMusic = false;
-                                //fadeIn = false;
-                            }
-                        }
-
                     }
-                }
 
+                    if (fadeIn == true)
+                    {
+                        aSource.volume += Time.deltaTime * fadeTime;
+
+                        if (aSource.volume >= maxVolume)
+                        {
+                            fadeIn = false;
+                            startFade = false;
+                            playSong2 = false;
+                            // playMusic = false;
+                            //fadeIn = false;
+                        }
+                    }
+
+                }
             }
+
         }
+        // }
 
 
     }

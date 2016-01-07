@@ -31,6 +31,8 @@ public class MovePaddels : MonoBehaviour
             rig2D.velocity = new Vector2(rig2D.velocity.x, -Input.GetAxis("Vertical") * -speed);
         }
 
+
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
