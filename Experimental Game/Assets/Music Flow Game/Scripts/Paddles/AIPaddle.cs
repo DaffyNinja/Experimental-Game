@@ -7,12 +7,14 @@ public class AIPaddle : MonoBehaviour
     Vector3 move = Vector3.zero;
 
     public float speed;
+    public float zoomedOutSpeed;
 
     public Transform ball;
-  
+    public GameMaster gMaster;
+
     void Start()
     {
-       
+
     }
 
     void Update()
@@ -29,6 +31,13 @@ public class AIPaddle : MonoBehaviour
         }
 
         transform.position += move * Time.deltaTime;
+
+        if (gMaster.hasZoomed == true)
+        {
+            speed = zoomedOutSpeed;
+        }
+
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -39,5 +48,5 @@ public class AIPaddle : MonoBehaviour
             //aSource.Play();
         }
     }
- 
+
 }

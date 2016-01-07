@@ -4,6 +4,7 @@ using System.Collections;
 public class NewBall : MonoBehaviour
 {
     public float speed = 30;
+    public float zoomedOutSpeed;
 
     public GameMaster gMaster;
     [Space(5)]
@@ -80,6 +81,11 @@ public class NewBall : MonoBehaviour
             GetComponent<Rigidbody2D>().velocity = dir * speed;
 
             transform.position = ballStartPos;
+        }
+
+        if (gMaster.hasZoomed == true)
+        {
+            speed = zoomedOutSpeed;
         }
     }
 

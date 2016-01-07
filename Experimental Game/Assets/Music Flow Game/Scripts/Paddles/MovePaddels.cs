@@ -5,7 +5,9 @@ public class MovePaddels : MonoBehaviour
 {
 
     public float speed;
-  
+    public float zoomedOutSpeed;
+    public GameMaster gMaster;
+
 
 
     Rigidbody2D rig2D;
@@ -14,7 +16,7 @@ public class MovePaddels : MonoBehaviour
     void Start()
     {
         rig2D = GetComponent<Rigidbody2D>();
-      
+
     }
 
     // Update is called once per frame
@@ -31,6 +33,10 @@ public class MovePaddels : MonoBehaviour
             rig2D.velocity = new Vector2(rig2D.velocity.x, -Input.GetAxis("Vertical") * -speed);
         }
 
+        if (gMaster.hasZoomed == true)
+        {
+            speed = zoomedOutSpeed;
+        }
 
 
     }
@@ -40,7 +46,7 @@ public class MovePaddels : MonoBehaviour
         if (col.gameObject.tag == "Ball")
         {
             //print("Hit");
-           // aSource.Play();
+            // aSource.Play();
         }
     }
 }
