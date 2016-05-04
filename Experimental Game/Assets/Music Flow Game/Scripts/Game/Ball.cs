@@ -8,14 +8,14 @@ public class Ball : MonoBehaviour
 
     public GameMaster gMaster;
 
-    private GameObject PlayerPaddle;
-    private GameObject EnemyPaddle;
+    public GameObject PlayerPaddle;
+    public GameObject EnemyPaddle;
 
-    private bool moveToPlayer;
+    bool moveToPlayer;
 
-    private bool moveToEnemyTop;
-    private bool moveToEnemyMid;
-    private bool moveToEnemyBot;
+    bool moveToEnemyTop;
+    bool moveToEnemyMid;
+    bool moveToEnemyBot;
 
 
     private Vector2 ballStartPos;
@@ -26,8 +26,8 @@ public class Ball : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PlayerPaddle = GameObject.Find("Paddle Player");
-        EnemyPaddle = GameObject.Find("Paddle CPU");
+        // PlayerPaddle = GameObject.Find("Paddle Player");
+        //  EnemyPaddle = GameObject.Find("Paddle CPU");
 
         moveToPlayer = true;
 

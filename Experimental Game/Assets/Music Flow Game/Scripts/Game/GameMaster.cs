@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
     [Header("Scoring")]
     public int playerScore;
     public int aiScore;
+
     [Space(5)]
     public bool canChange;
     public int changeBackgroundScore;
@@ -15,9 +17,11 @@ public class GameMaster : MonoBehaviour
     public int rotatePaddlesScore;
     //public int flipPositionsScore;
     public int cameraZoomOutScore;
+
     [Space(5)]
     public int winScore;
     public int loseScore;
+
     [Space(5)]
     public Text playerPointsText;
     public Text aiPointsText;
@@ -43,8 +47,8 @@ public class GameMaster : MonoBehaviour
 
     FlashBackground flashBack;
 
-    Vector3 paddle1StartPos;
-    Vector3 paddle2StartPos;
+    // Vector3 paddle1StartPos;
+    //  Vector3 paddle2StartPos;
 
     bool canFlip;
     bool canMove;
@@ -55,8 +59,6 @@ public class GameMaster : MonoBehaviour
     public float zoomOutSize;
     public float zoomSpeed;
     public bool hasZoomed;
-
-
 
     Camera mainCam;
 
@@ -71,14 +73,12 @@ public class GameMaster : MonoBehaviour
 
         flashBack = GetComponent<FlashBackground>();
 
-        paddle1StartPos = paddle1.transform.position;
-        paddle2StartPos = paddle2.transform.position;
+        //  paddle1StartPos = paddle1.transform.position;
+        //  paddle2StartPos = paddle2.transform.position;
 
         rotateRight = true;
 
         canFlip = true;
-
-
 
     }
 
@@ -86,16 +86,33 @@ public class GameMaster : MonoBehaviour
     void Update()
     {
 
-
-
-
-
         if (canChange)
         {
             Score();
         }
 
-        Controls();
+        // Music
+        if (playerScore >= changeMusicScore || aiScore >= changeMusicScore)
+        {
+            musMan.playSong2 = true;
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        // Win Lose
+        if (playerScore >= winScore)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else if (aiScore >= loseScore)
+        {
+
+            SceneManager.LoadScene(0);
+        }
 
     }
 
@@ -116,16 +133,8 @@ public class GameMaster : MonoBehaviour
         {
             paddle1.GetComponent<NewChangeSize>().changeSize = true;
             paddle2.GetComponent<NewChangeSize>().changeSize = true;
-
-
         }
 
-        // Music
-
-        if (playerScore >= changeMusicScore || aiScore >= changeMusicScore)
-        {
-            musMan.playSong2 = true;
-        }
 
         if (playerScore >= rotatePaddlesScore || aiScore >= rotatePaddlesScore)
         {
@@ -160,15 +169,6 @@ public class GameMaster : MonoBehaviour
             // Change direction
         }
 
-        // Flip
-        //if (playerScore >= flipPositionsScore || aiScore >= flipPositionsScore)
-        //{
-        //    print("Flip");
-        //    canMove = true;
-        //    canFlip = false;
-        //    hasFlipped = true;
-        //}
-
         // Camera zoom out
         if (playerScore >= cameraZoomOutScore || aiScore >= cameraZoomOutScore)
         {
@@ -180,34 +180,8 @@ public class GameMaster : MonoBehaviour
             //print("I have zoomed out");
             hasZoomed = true;
         }
-
-        // Win Lose
-        if (playerScore >= winScore)
-        {
-            //win
-            Application.LoadLevel(0);
-        }
-        else if (aiScore >= loseScore)
-        {
-            //Lose
-            Application.LoadLevel(0);
-        }
     }
 
-
-    void Controls()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            // Quit
-
-            // print("Quit");
-
-            Application.LoadLevel(0);
-
-
-        }
-    }
 
 
 }

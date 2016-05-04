@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MainMenu : MonoBehaviour
@@ -21,12 +22,13 @@ public class MainMenu : MonoBehaviour
 
     public void PlaySinleButton()
     {
-        Application.LoadLevel(1);
+        SceneManager.LoadScene(1);
+
     }
 
     public void Play2Player()
     {
-        Application.LoadLevel(2);
+        SceneManager.LoadScene(2);
     }
 
     public void CreditsButton()
